@@ -22,8 +22,8 @@ def run():
     cap = cv.VideoCapture(0)
 
     # Define a largura e altura
-    width = 320
-    height = 240
+    width = 550
+    height = 500
 
     # Ponto central da imagem (em torno do qual faremos a rotação)
     centro_x = width // 2 - 25
