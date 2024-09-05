@@ -14,7 +14,7 @@ setup(
     url="https://github.com/Joao-Pedro-Queiroz/enigma",
     entry_points={
         'console_scripts': [
-            'camera_alglin=camera_alglin.demo:main',
+            'camera_alglin=camera_alglin.main:main',
         ],
     },
     classifiers=[

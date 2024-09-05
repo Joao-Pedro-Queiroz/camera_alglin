@@ -14,6 +14,7 @@ def run():
     #Matrizes de transformação
     T = np.array([[1, 0, height/2], [0, 1, width/2], [0, 0, 1]])
     R = np.array([[0.7, -0.7, 0], [0.7, 0.7, 0], [0, 0, 1]])
+    X = np.linalg.inv(T) @ R @ T
 
     # Talvez o programa não consiga abrir a câmera. Verifique se há outros dispositivos acessando sua câmera!
     if not cap.isOpened():
@@ -33,9 +34,15 @@ def run():
         # Mudo o tamanho do meu frame para reduzir o processamento necessário
         # nas próximas etapas
         frame = cv.resize(frame, (width,height), interpolation =cv.INTER_AREA)
+        frame_trnsformado = X @ frame
+        frame_trnsformado = frame_trnsformado.astype(int)
+
+        # Troque este código pelo seu código de filtragem de pixels
+        frame_trnsformado[0,:] = np.clip(frame_trnsformado[0,:], 0, frame.shape[0])
+        frame_trnsformado[1,:] = np.clip(frame_trnsformado[1,:], 0, frame.shape[1])
 
         # A variável image é um np.array com shape=(width, height, colors)
-        image = np.array(frame).astype(float)/255
+        image = np.array(frame_trnsformado).astype(float)/255
 
         # Agora, mostrar a imagem na tela!
         cv.imshow('Minha Imagem!', image)
