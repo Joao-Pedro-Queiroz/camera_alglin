@@ -11,6 +11,10 @@ def run():
     width = 320
     height = 240
 
+    #Matrizes de transformação
+    T = np.array([[1, 0, height/2], [0, 1, width/2], [0, 0, 1]])
+    R = np.array([[0.7, -0.7, 0], [0.7, 0.7, 0], [0, 0, 1]])
+
     # Talvez o programa não consiga abrir a câmera. Verifique se há outros dispositivos acessando sua câmera!
     if not cap.isOpened():
         print("Não consegui abrir a câmera!")
