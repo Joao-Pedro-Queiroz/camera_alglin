@@ -5,7 +5,7 @@ setup(
     name="camera_alglin",
     version="0.1.0",
     packages=find_packages(),
-    install_requires=[],
+    install_requires=["opencv-python", "numpy"],
     author="João Pedro Queiroz Viana, Felipe Mariano",
     author_email="joaopqv@al.insper.edu.br, ",
     description="Uma biblioteca de criptografia.",
