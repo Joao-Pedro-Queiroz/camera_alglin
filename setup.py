@@ -11,7 +11,7 @@ setup(
     description="Uma biblioteca de criptografia.",
     long_description=open('README.md').read(),
     long_description_content_type="text/markdown",
-    url="https://github.com/Joao-Pedro-Queiroz/enigma",
+    url="https://github.com/Joao-Pedro-Queiroz/camera_alglin",
     entry_points={
         'console_scripts': [
             'camera_alglin=camera_alglin.main:main',

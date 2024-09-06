@@ -1,4 +1,4 @@
-from demo import run
+from camera_alglin.demo import run
 
 def main():
     run()
