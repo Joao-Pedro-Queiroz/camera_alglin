@@ -74,7 +74,7 @@ def run():
         Y = T_origem_para_centro @ R @ T_centro_para_origem
 
         # Gera os índices dos pixels da imagem
-        X = criar_indices(0, width, 0, height)
+        X = criar_indices(0, image.shape[0], 0, image.shape[1])
         X = np.vstack((X, np.ones(X.shape[1])))
 
         # Aplica a transformação
@@ -85,8 +85,7 @@ def run():
         # Aplica o clipping nos índices ANTES de acessar a imagem
         Xd[0, :] = np.clip(Xd[0, :], 0, image.shape[0] - 1)  # Limita no eixo vertical
         Xd[1, :] = np.clip(Xd[1, :], 0, image.shape[1] - 1)  # Limita no eixo horizontal
-        X[0, :] = np.clip(X[0, :], 0, image.shape[0] - 1)  # Limita os índices originais também
-        X[1, :] = np.clip(X[1, :], 0, image.shape[1] - 1)
+
 
         # Faz a atribuição dos pixels transformados
         image_[Xd[0, :], Xd[1, :], :] = image[X[0, :], X[1, :], :]
