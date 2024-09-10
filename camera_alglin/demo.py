@@ -74,17 +74,18 @@ def run():
         Y = T_origem_para_centro @ R @ T_centro_para_origem
 
         # Gera os índices dos pixels da imagem
-        X = criar_indices(0, image.shape[0], 0, image.shape[1])
-        X = np.vstack((X, np.ones(X.shape[1])))
+        Xd = criar_indices(0, image.shape[0], 0, image.shape[1])
+        Xd = np.vstack((Xd, np.ones(Xd.shape[1])))
 
         # Aplica a transformação
-        Xd = Y @ X
-        Xd = Xd.astype(int)
+        X = np.linalg.inv(Y) @ Xd
         X = X.astype(int)
+        Xd = Xd.astype(int)
+        
 
         # Aplica o clipping nos índices ANTES de acessar a imagem
-        Xd[0, :] = np.clip(Xd[0, :], 0, image.shape[0] - 1)  # Limita no eixo vertical
-        Xd[1, :] = np.clip(Xd[1, :], 0, image.shape[1] - 1)  # Limita no eixo horizontal
+        X[0, :] = np.clip(X[0, :], 0, image.shape[0] - 1)  # Limita no eixo vertical
+        X[1, :] = np.clip(X[1, :], 0, image.shape[1] - 1)  # Limita no eixo horizontal
 
 
         # Faz a atribuição dos pixels transformados
