@@ -17,6 +17,14 @@ def rotacao(theta):
         [0, 0, 1]
     ])
 
+def escala(s):
+    # Matriz de escala uniforme
+    return np.array([
+        [s, 0, 0],
+        [0, s, 0],
+        [0, 0, 1]
+    ])
+
 def run():
     # Abre a câmera
     cap = cv.VideoCapture(0)
@@ -25,7 +33,7 @@ def run():
     width = 320
     height = 240
 
-    # Ponto central da imagem (em torno do qual faremos a rotação)
+    # Ponto central da imagem (em torno do qual faremos a rotação e escala)
     centro_x = width // 2 - 25
     centro_y = height // 2 + 25
 
@@ -47,8 +55,10 @@ def run():
         print("Não consegui abrir a câmera!")
         exit()
 
-    # Ângulo inicial de rotação
+    # Ângulo inicial de rotação e fator de escala
     theta = 0
+    s = 1  # Fator de escala inicial
+    delta_s = 0.01  # Taxa de variação da escala
 
     while True:
         ret, frame = cap.read()
@@ -64,14 +74,20 @@ def run():
         image = np.array(frame).astype(float) / 255
         image_ = np.zeros_like(image)
 
-        # Atualiza o ângulo de rotação a cada frame
+        # Atualiza o ângulo de rotação e o fator de escala a cada frame
         theta += 0.03  # Ajuste o valor para controlar a velocidade da rotação
+        s += delta_s  # Atualiza o fator de escala
 
-        # Calcula a matriz de rotação para o ângulo atual
+        # Inverte a direção da escala quando atinge limites
+        if s >= 1.5 or s <= 0.5:
+            delta_s *= -1  # Inverte a direção da escala
+
+        # Calcula a matriz de rotação e escala para o ângulo e fator de escala atuais
         R = rotacao(theta)
+        S = escala(s)
 
-        # Matriz de transformação composta (translada para o centro, rotaciona, e volta para a posição original)
-        Y = T_origem_para_centro @ R @ T_centro_para_origem
+        # Matriz de transformação composta (translada para o centro, aplica escala e rotação, e volta para a posição original)
+        Y = T_origem_para_centro @ S @ R @ T_centro_para_origem
 
         # Gera os índices dos pixels da imagem
         Xd = criar_indices(0, image.shape[0], 0, image.shape[1])
@@ -82,11 +98,9 @@ def run():
         X = X.astype(int)
         Xd = Xd.astype(int)
         
-
         # Aplica o clipping nos índices ANTES de acessar a imagem
         X[0, :] = np.clip(X[0, :], 0, image.shape[0] - 1)  # Limita no eixo vertical
         X[1, :] = np.clip(X[1, :], 0, image.shape[1] - 1)  # Limita no eixo horizontal
-
 
         # Faz a atribuição dos pixels transformados
         image_[Xd[0, :], Xd[1, :], :] = image[X[0, :], X[1, :], :]
