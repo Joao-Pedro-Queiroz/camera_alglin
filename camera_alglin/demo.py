@@ -22,8 +22,8 @@ def run():
     cap = cv.VideoCapture(0)
 
     # Define a largura e altura
-    width = 550
-    height = 500
+    width = 320
+    height = 240
 
     # Ponto central da imagem (em torno do qual faremos a rotação)
     centro_x = width // 2 - 25
@@ -65,7 +65,7 @@ def run():
         image_ = np.zeros_like(image)
 
         # Atualiza o ângulo de rotação a cada frame
-        theta += 0.05  # Ajuste o valor para controlar a velocidade da rotação
+        theta += 0.03  # Ajuste o valor para controlar a velocidade da rotação
 
         # Calcula a matriz de rotação para o ângulo atual
         R = rotacao(theta)
