@@ -59,6 +59,7 @@ def run():
     theta = 0
     s = 1  # Fator de escala inicial
     delta_s = 0.01  # Taxa de variação da escala
+    rot_speed = 0.03
 
     while True:
         ret, frame = cap.read()
@@ -75,7 +76,16 @@ def run():
         image_ = np.zeros_like(image)
 
         # Atualiza o ângulo de rotação e o fator de escala a cada frame
-        theta += 0.03  # Ajuste o valor para controlar a velocidade da rotação
+        tecla = cv.waitKey(1)
+
+        if tecla == ord('r'):
+            rot_speed += 0.01  
+        elif tecla == ord('d'):
+            rot_speed = max(0.01, rot_speed - 0.01) 
+        elif tecla == ord('n'):
+            rot_speed = 0.03
+
+        theta += rot_speed  # Ajuste o valor para controlar a velocidade da rotação
         s += delta_s  # Atualiza o fator de escala
 
         # Inverte a direção da escala quando atinge limites
@@ -109,7 +119,7 @@ def run():
         cv.imshow('Minha Imagem!', image_)
 
         # Sai do loop se 'q' for pressionado
-        if cv.waitKey(1) == ord('q'):
+        if tecla == ord('q'):
             break
 
     cap.release()
