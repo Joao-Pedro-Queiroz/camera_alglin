@@ -8,7 +8,7 @@ setup(
     install_requires=["opencv-python", "numpy"],
     author="João Pedro Queiroz Viana, Felipe Mariano",
     author_email="joaopqv@al.insper.edu.br, ",
-    description="Uma biblioteca de criptografia.",
+    description="Uma biblioteca de transformações em tempo real.",
     long_description=open('README.md').read(),
     long_description_content_type="text/markdown",
     url="https://github.com/Joao-Pedro-Queiroz/camera_alglin",
