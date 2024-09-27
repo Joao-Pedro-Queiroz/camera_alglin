@@ -1,6 +1,6 @@
 # camera_alglin
 
-Sistema que faz transformações de imahem em tempo real.
+Sistema que faz transformações de imagem em tempo real.
 
 ## Tranformações
 
